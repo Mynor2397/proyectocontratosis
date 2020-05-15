@@ -1,0 +1,48 @@
+service: proyectois
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-2
+  profile: default
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: "*"
+      # Resource: "arn:aws:s3:::filesumgis/*"
+      # - 'arn:aws:iam::aws:policy/AmazonTextractFullAccess'
+
+  
+
+functions:
+  textractScan:
+    handler: src/index.textract
+    description: Textract, S3, Dynamo
+    events:
+      - http:
+          path: textract
+          method: post
+          cors: true
+
+
+resources:
+  Resources:
+    UploadBucket:
+      Type: "AWS::S3::Bucket"
+      Properties:
+        BucketName: contratosingsoftwaremike
+        AccessControl: PublicRead
+        CorsConfiguration:
+          CorsRules:
+            - AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - OPTIONS
+              - HEAD
+              AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
