@@ -13,6 +13,6 @@
     "aws-sdk": "^2.674.0",
     "commander": "^5.1.0",
     "fs": "0.0.1-security",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   }
 }
